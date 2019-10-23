@@ -5,6 +5,8 @@ const inquirer = require("inquirer");
 const ora = require("ora");
 const { Worker, isMainThread, workerData } = require("worker_threads");
 
+const NS_PER_SEC = 1e9;
+
 const calFactorialFromWorkerThread = number => {
   if (number === 0) {
     return 1;
@@ -16,7 +18,6 @@ const calFactorialFromWorkerThread = number => {
     }
 
     const cores = os.cpus().length;
-    // const cores = 1;
     const segmentSize = Math.ceil(numbers.length / cores);
     const segmentCount = Math.ceil(numbers.length / segmentSize);
     const segments = [];
@@ -69,14 +70,17 @@ const calFactorialFromMainThread = number => {
 
 const benchMark = async (funcName, time, label) => {
   const startTime = process.hrtime();
-  await funcName(time).then(res => console.log(res));
+  await funcName(time).then();
   const diffTime = process.hrtime(startTime);
-  console.log(`${label} took ${diffTime[0]}.${diffTime[1]} seconds`);
+  console.log(
+    `${label} took ${diffTime[0] + diffTime[1] / NS_PER_SEC} seconds`
+  );
 };
 
+//cross = 11081
 const run = async () => {
-  benchMark(calFactorialFromMainThread, 10000, "Main thread");
-  benchMark(calFactorialFromWorkerThread, 10000, "Worker thread");
+  benchMark(calFactorialFromMainThread, 100, "Main thread");
+  benchMark(calFactorialFromWorkerThread, 100, "Worker thread");
 };
 
 run();
