@@ -1,0 +1,16 @@
+{
+  "name": "worker-threads-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --experimental-worker index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "inquirer": "^7.0.0",
+    "ora": "^4.0.2"
+  }
+}
