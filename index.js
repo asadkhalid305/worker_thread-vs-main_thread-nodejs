@@ -1,9 +1,6 @@
-const worker = require("worker_threads");
 const os = require("os");
 const path = require("path");
-const inquirer = require("inquirer");
-const ora = require("ora");
-const { Worker, isMainThread, workerData } = require("worker_threads");
+const { Worker } = require("worker_threads");
 
 const NS_PER_SEC = 1e9;
 
